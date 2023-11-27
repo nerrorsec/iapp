@@ -1,46 +1,24 @@
 <html>
-
 <body>
     <script>
         const url = "http://127.0.0.1:43800/api/runs/search/run";
-
-        // Function to send GET request
         const sendGetRequest = async () => {
             try {
                 const response = await fetch(url);
-                // const data = await response.json();
                 const data = await response.text();
-
                 const regex = /([a-z0-9]+)�/;
-                
                 const match = regex.exec(data);
-                
                 if (match && match.length > 1) {
-                  const dynamicID = match[1];
-                  console.log('Dynamic ID:', dynamicID);
-                  await sendDeleteRequest(dynamicID);
+                    const dynamicID = match[1];
+                    console.log('Dynamic ID:', dynamicID);
+                    await sendDeleteRequest(dynamicID);
                 } else {
-                  console.log('Dynamic ID not found.');
+                    console.log('Dynamic ID not found.');
                 }
-
-                // Check if the response is an array and has at least one element
-                // if (Array.isArray(data) && data.length > 0) {
-                //     const id = data[0].id;
-                //     console.log("Received ID:", id);
-
-                //     // Send DELETE request with the extracted ID
-                //     await sendDeleteRequest(id);
-                // } else {
-                //     console.error("No valid data received in the response.");
-                // }
-
-
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
-
-        // Function to send DELETE request
         const sendDeleteRequest = async (id) => {
             const deleteUrl = `http://127.0.0.1:43800/api/runs/${id}`;
             const deleteHeaders = {
@@ -49,7 +27,6 @@
                     "Accept": "*/*",
                 },
             };
-
             try {
                 const response = await fetch(deleteUrl, deleteHeaders);
 
@@ -62,12 +39,7 @@
                 console.error("Error sending DELETE request:", error);
             }
         };
-
-        // Call the function to initiate the process
         sendGetRequest();
-
-
     </script>
 </body>
-
 </html>
