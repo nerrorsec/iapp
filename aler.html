@@ -10,6 +10,18 @@
                 const response = await fetch(url);
                 // const data = await response.json();
                 const data = await response.text();
+
+                const regex = /([a-f0-9]+)�/;
+                
+                const match = regex.exec(data);
+                
+                if (match && match.length > 1) {
+                  const dynamicID = match[1];
+                  console.log('Dynamic ID:', dynamicID);
+                } else {
+                  console.log('Dynamic ID not found.');
+                }
+
                 // Check if the response is an array and has at least one element
                 // if (Array.isArray(data) && data.length > 0) {
                 //     const id = data[0].id;
