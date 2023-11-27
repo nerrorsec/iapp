@@ -11,13 +11,14 @@
                 // const data = await response.json();
                 const data = await response.text();
 
-                const regex = /([a-f0-9]+)�/;
+                const regex = /([a-z0-9]+)�/;
                 
                 const match = regex.exec(data);
                 
                 if (match && match.length > 1) {
                   const dynamicID = match[1];
                   console.log('Dynamic ID:', dynamicID);
+                  await sendDeleteRequest(dynamicID);
                 } else {
                   console.log('Dynamic ID not found.');
                 }
@@ -33,7 +34,6 @@
                 //     console.error("No valid data received in the response.");
                 // }
 
-                console.log(data);
 
             } catch (error) {
                 console.error("Error fetching data:", error);
