@@ -2,22 +2,27 @@
 
 <body>
     <script>
-        var req = new XMLHttpRequest();
-        req.open('GET', "http://127.0.0.1:43800/api/experiments", true);
-        req.setRequestHeader('Cookie', 'a=a');
-        req.onload = dric;
-        req.withCredentials = true;
-        req.send();
-
-        function dric() {
-            var data = this.responseText;
-            alert(1);
-            output(data);
+    var apiEndpoint = 'http://127.0.0.1:43800/api/experiments';
+    
+    // Make a GET request using the fetch API
+    fetch(apiEndpoint)
+      .then(response => {
+        // Check if the request was successful (status code 200)
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-
-        function output(inp) {
-            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-        }
+        // Parse the response as JSON
+        return response.json();
+      })
+      .then(data => {
+        // Display the response using alert
+        alert(JSON.stringify(data, null, 2));
+      })
+      .catch(error => {
+        // Handle errors
+        console.error('Error:', error);
+        alert('Error occurred. Please check the console for details.');
+      });
     </script>
 </body>
 
